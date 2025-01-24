@@ -23,7 +23,7 @@ if(isset($_POST['but_logout'])){
 </html>
 
 <?php
-$servername = "devopsdb";
+$servername = "db";
 $username = "root";
 $password = "admin123";
 $dbname = "customers";
