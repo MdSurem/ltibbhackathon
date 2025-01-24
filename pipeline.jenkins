@@ -1,0 +1,33 @@
+pipeline{
+    agent any
+    stages{
+        stage("code"){
+            steps{
+                git 'https://github.com/MdSurem/ltibbhackathon.git'
+            }
+        }
+        stage("build"){
+            steps{
+                sh "docker build -t app-image ."
+                sh "docker build -t db-image database/."
+            }
+        }
+        stage("push-hub"){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-id', toolName: 'docker') {
+                        sh "docker tag app-image mdsurem/blood:app"
+                        sh "docker tag db-image mdsurem/blood:db"
+                        sh "docker push mdsurem/blood:app"
+                        sh "docker push mdsurem/blood:db"
+                    }
+                }
+            }
+        }
+        stage("deploy"){
+            steps{
+               sh "docker stack deploy --compose-file=compose.yml flm-blood" 
+            }
+        }
+    }
+}
