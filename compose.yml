@@ -1,0 +1,18 @@
+---
+version: "3"
+services:
+  db:
+    container_name: devopsdb
+    image: mdsurem/blood:db
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/var/www/html"
+
+  app:
+    container_name: app-cont
+    image: mdsurem/blood:app
+    ports:
+      - "3434:80"
+    depends_on:
+      - db
