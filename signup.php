@@ -5,7 +5,7 @@ class script{
 
         public function __construct(){
 
-                $server = "devopsdb";
+                $server = "db";
                 $user = "root";
                 $pass = "admin123";
                 $db = "customers";
