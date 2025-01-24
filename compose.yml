@@ -1,8 +1,6 @@
----
 version: "3"
 services:
   db:
-    container_name: devopsdb
     image: mdsurem/blood:db
     ports:
       - "3306:3306"
@@ -10,9 +8,10 @@ services:
       - "/var/www/html"
 
   app:
-    container_name: app-cont
     image: mdsurem/blood:app
     ports:
       - "3434:80"
     depends_on:
       - db
+    environment:
+      - DB_HOST=db  # Make sure your app points to the 'db' service name for the database
