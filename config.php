@@ -2,7 +2,7 @@
 
 session_start();
 
-$host = "devopsdb"; /* Host name */
+$host = "db"; /* Host name */
 $user = "root"; /* User */
 $password = "admin123"; /* Password */
 $dbname = "customers"; /* Database name */
