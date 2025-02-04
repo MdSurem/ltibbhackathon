@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+  namespace: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blood
+  template:
+    metadata:
+      labels:
+        app: blood
+    spec:
+      containers:
+        - name: cont-app
+          image: mdsurem/demo:app
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_HOST
+              value: db
+      imagePullSecrets:
+        - name: my-secret
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-svc
+  namespace: dev
+spec:
+  type: LoadBalancer
+  selector:
+    app: blood
+  ports:
+    - port: 80
+      targetPort: 80
+  
+

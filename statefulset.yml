@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+   name: my-db
+   namespace: dev
+spec:
+  serviceName: db
+  replicas: 2
+  selector:
+    matchLabels:
+      app: blood
+  template:
+    metadata:
+      labels:
+        app: blood
+    spec:
+      containers:
+        - name: cont-db
+          image: mdsurem/demo:db
+          ports:
+            - containerPort: 3306
+          volumes:
+            - name: devops
+              mountPath: "/opt/blood-app"
+      volumeClaimTemplates:
+        - metadata:
+            name: devops
+            spec:
+              accessModes: ["ReadWriteOnce"]
+              resources:
+                requests:
+                  storage: 1Gi
+      imagePullSecrets:
+        - name: my-secret
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: dev
+spec:
+  type: ClusterIP
+  selector:
+    app: blood
+  ports:
+    - port: 3306
+      targetPort: 3306
+
