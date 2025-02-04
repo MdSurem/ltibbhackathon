@@ -21,9 +21,10 @@ spec:
             - containerPort: 80
           env:
             - name: DB_HOST
-              value: db
+              value: db  # Make sure this matches the service name of MySQL
       imagePullSecrets:
         - name: my-secret
+
 
 
 ---
