@@ -5,7 +5,7 @@ metadata:
   name: my-db
   namespace: dev
 spec:
-  serviceName: db  # This should match the DB_HOST value in the app
+  serviceName: db
   replicas: 2
   selector:
     matchLabels:
@@ -21,11 +21,11 @@ spec:
           ports:
             - containerPort: 3306
           volumeMounts:
-            - name: devops
+            - name: devops  # Ensure the volume is properly referenced
               mountPath: "/opt/blood-app"
       volumeClaimTemplates:
         - metadata:
-            name: devops
+            name: devops  # This is the volume definition, which matches the volumeMount name
             spec:
               accessModes: ["ReadWriteOnce"]
               resources:
@@ -33,6 +33,7 @@ spec:
                   storage: 1Gi
       imagePullSecrets:
         - name: my-secret
+
 
 
 ---
