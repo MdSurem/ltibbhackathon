@@ -5,7 +5,7 @@ metadata:
    name: my-db
    namespace: dev
 spec:
-  serviceName: db
+  serviceName: "mysql"
   replicas: 2
   selector:
     matchLabels:
